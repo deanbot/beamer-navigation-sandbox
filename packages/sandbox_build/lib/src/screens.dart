@@ -83,7 +83,8 @@ class BuildKeyboardHome extends StatelessWidget {
                       return TextButton(
                         onPressed: () {
                           // open keyboard selection route
-                          beamerKey.currentState!.routerDelegate.beamToNamed(
+                          // beamerKey.currentState!.routerDelegate.beamToNamed(
+                          context.beamToNamed(
                               '/${BuildLocation.build}/${BuildKeyboardLocation.keyboard}/${BuildKeyboardLocation.category}');
                         },
                         child: const Text('Choose Keyboard'),
@@ -179,7 +180,8 @@ class BuildKeyboardCategory extends StatelessWidget {
   }
 
   void _onTapCategory(BuildContext context, String category) {
-    beamerKey.currentState!.routerDelegate.beamToNamed(
+    // beamerKey.currentState!.routerDelegate.beamToNamed(
+    context.beamToNamed(
         '/${BuildLocation.build}/${BuildKeyboardLocation.keyboard}/${BuildKeyboardLocation.listing}',
         data: {
           'category': category,
@@ -237,7 +239,6 @@ class BuildKeyboardListing extends StatelessWidget {
             return Center(
               child: Row(
                 mainAxisSize: MainAxisSize.min,
-                // mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   SizedBox(
                     width: 200,
@@ -246,7 +247,9 @@ class BuildKeyboardListing extends StatelessWidget {
                   ElevatedButton(
                     onPressed: () {
                       context.read<KeyboardBuildCubit>().update(keyboard: item);
-                      beamerKey.currentState!.routerDelegate.popToNamed('/${BuildLocation.build}/${BuildKeyboardLocation.keyboard}');
+                      // beamerKey.currentState!.routerDelegate
+                      context.popToNamed(
+                          '/${BuildLocation.build}/${BuildKeyboardLocation.keyboard}');
                     },
                     child: const Text('Select'),
                   ),
