@@ -38,7 +38,7 @@ class BuildScreen extends StatelessWidget {
           ),
         ),
         body: Beamer(
-          key: _beamerKey,
+          // key: _beamerKey,
           routerDelegate: routerDelegate,
         ),
       ),
@@ -199,9 +199,9 @@ class BuildKeyboardListing extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     late List<String> results;
-    final Map<String, dynamic> _data = beamerKey.currentState!.routerDelegate
-            .currentBeamLocation.data as Map<String, dynamic>? ??
-        {};
+    final Map<String, dynamic> _data =
+        // beamerKey.currentState!.routerDelegate
+        context.currentBeamLocation.data as Map<String, dynamic>? ?? {};
     final String _category = _data['category'] as String? ?? '';
 
     final rowstagResults = [
