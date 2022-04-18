@@ -15,7 +15,7 @@ class MyApp extends StatelessWidget {
     locationBuilder: BeamerLocationBuilder(
       beamLocations: [
         HomeLocation(),
-        AboutLocation(),
+        AboutPanelLocation(),
         ...SandboxBuild.getLocations(),
       ],
     ),

@@ -13,7 +13,7 @@ class BuildScreen extends StatelessWidget {
         print('inner: ${routeInformation.location}'),
     locationBuilder: BeamerLocationBuilder(
       beamLocations: [
-        BuildKeyboardLocation(key: _beamerKey),
+        BuildKeyboardLocation(),
       ],
     ),
     // updateParent: false,
@@ -49,9 +49,7 @@ class BuildScreen extends StatelessWidget {
 class BuildKeyboardHome extends StatelessWidget {
   const BuildKeyboardHome({
     Key? key,
-    required this.beamerKey,
   }) : super(key: key);
-  final GlobalKey<BeamerState> beamerKey;
 
   @override
   Widget build(BuildContext context) {
@@ -140,9 +138,7 @@ class BuildKeyboardHome extends StatelessWidget {
 class BuildKeyboardCategory extends StatelessWidget {
   const BuildKeyboardCategory({
     Key? key,
-    required this.beamerKey,
   }) : super(key: key);
-  final GlobalKey<BeamerState> beamerKey;
 
   @override
   Widget build(BuildContext context) {
@@ -192,9 +188,7 @@ class BuildKeyboardCategory extends StatelessWidget {
 class BuildKeyboardListing extends StatelessWidget {
   const BuildKeyboardListing({
     Key? key,
-    required this.beamerKey,
   }) : super(key: key);
-  final GlobalKey<BeamerState> beamerKey;
 
   @override
   Widget build(BuildContext context) {

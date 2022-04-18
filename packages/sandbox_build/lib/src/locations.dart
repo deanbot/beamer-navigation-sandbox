@@ -24,8 +24,7 @@ class BuildLocation extends BeamLocation<BeamState> {
 }
 
 class BuildKeyboardLocation extends BeamLocation<BeamState> {
-  BuildKeyboardLocation({required this.key}) : super();
-  final GlobalKey<BeamerState> key;
+  BuildKeyboardLocation() : super();
 
   static const String keyboard = 'keyboard';
   static const String category = 'category';
@@ -41,29 +40,23 @@ class BuildKeyboardLocation extends BeamLocation<BeamState> {
   @override
   List<BeamPage> buildPages(BuildContext context, BeamState state) {
     final stack = [
-      BeamPage(
-        key: const ValueKey('build-keyboard-home-route'),
-        child: BuildKeyboardHome(
-          beamerKey: key,
-        ),
+      const BeamPage(
+        key: ValueKey('build-keyboard-home-route'),
+        child: BuildKeyboardHome(),
       )
     ];
 
     if (state.pathPatternSegments.contains(category)) {
-      stack.add(BeamPage(
-        key: const ValueKey('build-keyboard-category-route'),
-        child: BuildKeyboardCategory(
-          beamerKey: key,
-        ),
+      stack.add(const BeamPage(
+        key: ValueKey('build-keyboard-category-route'),
+        child: BuildKeyboardCategory(),
       ));
     }
 
     if (state.pathPatternSegments.contains(listing)) {
-      stack.add(BeamPage(
-        key: const ValueKey('build-keyboard-listing-route'),
-        child: BuildKeyboardListing(
-          beamerKey: key,
-        ),
+      stack.add(const BeamPage(
+        key: ValueKey('build-keyboard-listing-route'),
+        child: BuildKeyboardListing(),
       ));
     }
 
