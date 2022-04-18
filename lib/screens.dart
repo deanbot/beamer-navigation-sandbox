@@ -19,7 +19,7 @@ class HomeScreen extends StatelessWidget {
               children: [
                 TextButton(
                   onPressed: () {
-                    context.beamToNamed('/${AboutPanelLocation.about}');
+                    context.beamToNamed(AboutLocation.about);
                   },
                   child: const Text('About'),
                 ),
@@ -47,13 +47,11 @@ class AboutPanelScreen extends StatelessWidget {
   static final BeamerDelegate _routerDelegate = BeamerDelegate(
     routeListener: (routeInformation, _) =>
         print('about: ${routeInformation.location}'),
-    // transitionDelegate: const NoAnimationTransitionDelegate(),
     locationBuilder: BeamerLocationBuilder(
       beamLocations: [
-        AboutNestedLocation(),
+        AboutLocation(),
       ],
     ),
-    // updateFromParent: false,
   );
   static final _beamerKey = GlobalKey<BeamerState>();
 
@@ -65,9 +63,8 @@ class AboutPanelScreen extends StatelessWidget {
         actions: [
           TextButton(
             onPressed: () {
-              _beamerKey.currentState?.routerDelegate.beamToNamed(
-                  '/${AboutNestedLocation.about}/${AboutNestedLocation.aboutAuthor}');
-              // context.beamToNamed('/${AboutNestedLocation.about}/${AboutNestedLocation.aboutAuthor}');
+              _beamerKey.currentState?.routerDelegate
+                  .beamToNamed(AboutLocation.aboutAuthor);
             },
             child: const Text(
               'Author',
@@ -78,9 +75,8 @@ class AboutPanelScreen extends StatelessWidget {
           ),
           TextButton(
             onPressed: () {
-              _beamerKey.currentState?.routerDelegate.beamToNamed(
-                  '/${AboutNestedLocation.about}/${AboutNestedLocation.aboutApp}');
-              // context.beamToNamed('/${AboutNestedLocation.about}/${AboutNestedLocation.aboutApp}');
+              _beamerKey.currentState?.routerDelegate
+                  .beamToNamed(AboutLocation.aboutApp);
             },
             child: const Text(
               'App',
@@ -91,9 +87,77 @@ class AboutPanelScreen extends StatelessWidget {
           ),
         ],
       ),
-      body: Beamer(
-        routerDelegate: _routerDelegate,
-        key: _beamerKey,
+      body: Padding(
+        padding: const EdgeInsets.only(top: 20),
+        child: Row(
+          children: [
+            _Sidebar(
+              beamer: _beamerKey,
+            ),
+            Expanded(
+              child: Container(
+                alignment: Alignment.centerLeft,
+                padding: const EdgeInsets.only(left: 20),
+                child: Beamer(
+                  routerDelegate: _routerDelegate,
+                  key: _beamerKey,
+                ),
+              ),
+            )
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _Sidebar extends StatefulWidget {
+  const _Sidebar({
+    Key? key,
+    required this.beamer,
+  }) : super(key: key);
+  final GlobalKey<BeamerState> beamer;
+
+  @override
+  State<_Sidebar> createState() => _SidebarState();
+}
+
+class _SidebarState extends State<_Sidebar> {
+  void _setStateListener() => setState(() {});
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance!.addPostFrameCallback((timeStamp) => widget
+        .beamer.currentState?.routerDelegate
+        .addListener(_setStateListener));
+  }
+
+  @override
+  void dispose() {
+    widget.beamer.currentState?.routerDelegate
+        .removeListener(_setStateListener);
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final path = (context.currentBeamLocation.state as BeamState).uri.path;
+    late final Widget child;
+
+    if (path == AboutLocation.aboutAuthor) {
+      child = const Text('Learn about the author');
+    } else if (path == AboutLocation.aboutApp) {
+      child = const Text('Learn about the app');
+    } else {
+      child = const Text('Select an option');
+    }
+    return Container(
+      decoration: const BoxDecoration(
+        color: Colors.grey,
+      ),
+      child: Center(
+        child: child,
       ),
     );
   }

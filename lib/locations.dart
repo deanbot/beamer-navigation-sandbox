@@ -9,24 +9,19 @@ class HomeLocation extends BeamLocation<BeamState> {
 
   @override
   List<BeamPage> buildPages(BuildContext context, BeamState state) {
-    // home
-    final stack = [
+    return const [
       BeamPage(
         key: ValueKey('home-route'),
-        child: const HomeScreen(),
+        child: HomeScreen(),
       ),
     ];
-
-    return stack;
   }
 }
 
 class AboutPanelLocation extends BeamLocation<BeamState> {
-  static String about = 'about';
-
   @override
   List<Pattern> get pathPatterns => [
-        '/$about/*',
+        '/about/*',
       ];
 
   @override
@@ -36,8 +31,7 @@ class AboutPanelLocation extends BeamLocation<BeamState> {
       BeamPage(
         key: const ValueKey('about-panel-route'),
         routeBuilder: RouteUtils.getPanelRouteBuilder(
-          onDismiss: () =>
-              context.popBeamLocation(), //context.beamToNamed('/'),
+          onDismiss: () => context.popBeamLocation(),
         ),
         child: const AboutPanelScreen(),
       ),
@@ -46,16 +40,13 @@ class AboutPanelLocation extends BeamLocation<BeamState> {
   }
 }
 
-class AboutNestedLocation extends BeamLocation<BeamState> {
-  static String about = 'about';
-  static String aboutAuthor = 'author';
-  static String aboutApp = 'app';
+class AboutLocation extends BeamLocation<BeamState> {
+  static String about = '/about';
+  static String aboutAuthor = '/about/author';
+  static String aboutApp = '/about/app';
 
   @override
-  List<Pattern> get pathPatterns => [
-        '/$about/$aboutAuthor',
-        '/$about/$aboutApp',
-      ];
+  List<Pattern> get pathPatterns => [about, aboutAuthor, aboutApp];
 
   @override
   List<BeamPage> buildPages(BuildContext context, BeamState state) {
@@ -67,14 +58,14 @@ class AboutNestedLocation extends BeamLocation<BeamState> {
       ),
 
       // about author
-      if (state.pathPatternSegments.contains(aboutAuthor))
+      if (state.uri.path == aboutAuthor)
         const BeamPage(
           key: ValueKey('about-author-route'),
           child: AboutAuthorScreen(),
         ),
 
       // about app
-      if (state.pathPatternSegments.contains(aboutApp))
+      if (state.uri.path == aboutApp)
         const BeamPage(
           key: ValueKey('about-app-route'),
           child: AboutAppScreen(),
